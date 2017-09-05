@@ -13,19 +13,22 @@
   		<div class="row">
   			<div class="col-md-12">
   				<h1 class="center">Dashbaord</h1>
-		  		<div>Users: {{ users }}</div>
-		  		<div>Questions: {{ questions }}</div>
-		  		<div>Answers: {{ answers }}</div>
+		  		<div>Users: <span class="badge badge-primary"> {{users}} </span></div>
+		  		<div>Questions: <span class="badge badge-primary"> {{ questions }} </span></div>
+		  		<div>Answers: <span class="badge badge-primary"> {{ answers }} </span></div>
   			</div>	
   		</div>
+  		<br>
   		<div class="row">
   			<div class="col-md-12">
+
   			<table class="table">
-	  			<thead>
+	  			<thead class="thead-default">
 	  				<tr>
-	  					<td>Name</td>
-	  					<td>API key</td>
-	  					<td>API Call Count</td>
+	  					<th>Name</th>
+	  					<th>API key</th>
+	  					<th>API Call Count</th>
+	  					<th>Call API</th>
 	  				</tr>
 	  			</thead>
 	  			<tbody>
@@ -34,6 +37,11 @@
 	      				<td>{{tenant.name}}</td>
 	      				<td>{{tenant.api_key}}</td>
 	      				<td>{{tenant.count}}</td>
+	      				<td>
+	      					<a href="/api/questions/?api_key={{tenant.api_key}}&format=json" target="_blank">
+	      						<button type="button" class="btn btn-success">Call API</button>	
+	      					</a>
+	      				</td>
 	    			</tr>
 					{% endfor %}
 	  			</tbody>

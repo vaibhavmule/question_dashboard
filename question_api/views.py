@@ -38,6 +38,18 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
         except (ObjectDoesNotExist):
             return Response({'message': 'API key is not valid'}, status=401)
 
+    def retrieve(self, request, pk):
+        api_key = request.query_params.get('api_key', None)
+        if not api_key:
+            return Response({'message': 'provide API key'}, status=400)
+        try:
+            tenant = Tenant.objects.get(api_key=api_key)
+            instance = self.get_object()
+            serializer = self.serializer_class(instance)
+            return Response(serializer.data)
+        except (ObjectDoesNotExist):
+            return Response({'message': 'API key is not valid'}, status=401)
+
 
 def index(request):
     context = {
