@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response
+from django.db.models import Sum
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -11,7 +12,8 @@ from question_api.models import (
     Question,
     Tenant,
     User,
-    Answer,)
+    Answer,
+    APICount)
 from question_api.serilaizer import QuestionSeriliazer
 
 
@@ -44,7 +46,9 @@ def index(request):
         "users": User.objects.count(),
         "tenants": [{
             "name": tenant.name,
-            "api_key": tenant.api_key
+            "api_key": tenant.api_key,
+            "count": APICount.objects.filter(
+                tenant=tenant).aggregate(Sum('count'))['count__sum'] or 0,
         } for tenant in Tenant.objects.all()]
     }
     return render_to_response('index.html', context=context)

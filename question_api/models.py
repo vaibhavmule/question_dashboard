@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import uuid
+import datetime
 
 from django.db import models
 
@@ -29,3 +30,13 @@ class User(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+
+class APICount(models.Model):
+    tenant = models.ForeignKey(Tenant)
+    count = models.IntegerField(default=0)
+    next_timestamp = models.DateTimeField(default=datetime.datetime.now())
+
+    def __unicode__(self):
+        return "Tenant: {} | Api Count: {}".format(
+        	self.tenant.name, self.count)

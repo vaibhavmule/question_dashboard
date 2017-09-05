@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'question_api.middleware.APIRateThrottleMiddleware',
 ]
 
 ROOT_URLCONF = 'question_dashboard.urls'
