@@ -29,6 +29,8 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
             q = request.query_params.get('q', None)
             if q:
                 queryset = queryset.filter(title__icontains=q)
+                if queryset.count() == 0:
+                    return Response({"No results found"}, status=404)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
         except (ObjectDoesNotExist):
