@@ -25,7 +25,7 @@ class APIRateThrottleMiddleware(object):
                 tenant = Tenant.objects.get(api_key=api_key)
                 api_count, created = APICount.objects.get_or_create(
                     tenant=tenant)
-                if api_count.count > 100 == api_count.next_timestamp + datetime.timedelta(seconds=10) > now:
+                if api_count.count > 100 and api_count.next_timestamp + datetime.timedelta(seconds=10) > now:
                     return Response({
                         'message': 'Try after few seconds'
                     }, status=429)
